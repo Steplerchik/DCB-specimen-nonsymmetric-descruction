@@ -1,0 +1,35 @@
+pi=aCOS(-1)
+b=150
+
+*DIM,sukaa,,19
+
+*vread,sukaa(1,1),'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\Betta_0.4',txt,,IJK,19,1,,1
+(F20.0)
+
+*do,aw,1,19
+
+l=aw*0.05*b
+sukaa(aw)=sukaa(aw)/sqrt(pi*l)
+
+*enddo
+
+*DIM,pam,,19,19
+
+*do,j,1,19
+pam(j,1)=sukaa(j)
+*enddo
+
+*do,j,1,19
+pam(1,j)=pam(j,1)
+*enddo
+
+*CFOPEN,'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\C_0.4',txt,,
+*VWRITE,'C'
+%C
+*VWRITE,pam(1,1),pam(1,2),pam(1,3),pam(1,4),pam(1,5),pam(1,6),pam(1,7),pam(1,8),pam(1,9),pam(1,10),pam(1,11),pam(1,12),pam(1,13),pam(1,14),pam(1,15),pam(1,16),pam(1,17),pam(1,18),pam(1,19)
+%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G
+
+*CFCLOS
+
+c
+

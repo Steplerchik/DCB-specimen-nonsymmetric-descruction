@@ -1,0 +1,19 @@
+
+
+
+*DIM,pam,,19,19
+pam(1,1)=1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9
+pam(19,1)=2.9
+
+*do,i,1,19
+pam(1,i)=pam(i,1)
+*enddo
+
+
+*CFOPEN,'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\Betta_0.4',txt,,
+*VWRITE,'БЕТТА'
+%C
+*VWRITE,pam(1,1),pam(1,2),pam(1,3),pam(1,4),pam(1,5),pam(1,6),pam(1,7),pam(1,8),pam(1,9),pam(1,10),pam(1,11),pam(1,12),pam(1,13),pam(1,14),pam(1,15),pam(1,16),pam(1,17),pam(1,18),pam(1,19)
+%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G,%G
+
+*CFCLOS

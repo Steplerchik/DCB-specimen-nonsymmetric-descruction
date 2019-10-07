@@ -1,0 +1,27 @@
+
+aw=10
+
+b=150
+t=10
+l=aw*0.05*b
+E=3000
+mu=0.3
+H=0.6*b
+
+model_dcb,b,t,l,E,mu,H
+raschet
+
+/post1
+
+csys,101
+nsel,s,loc,x,2*t,2*b
+ESLN,U,1
+nsel,all
+
+/EFACET,1   
+PLESOL, SENE,, 0,1.0
+
+*CFOPEN,'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\coeff_1mode',txt,,
+*VWRITE,am(1,1)
+%G
+*CFCLOS

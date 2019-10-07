@@ -1,0 +1,195 @@
+ /COM,  Structural  
+KEYW,PR_SET,1   
+KEYW,PR_STRUC,1 
+ 
+   
+! Параметры модели    
+
+*SET,b,arg1
+*SET,t,arg2
+*SET,l,arg3 
+*SET,E,arg4  
+*SET,mu,arg5
+*SET,h,arg6 
+
+! Дополнительные параметры
+
+m=0.1*b/l !масштаб сетки
+b1=b+0.25*2*t
+a=0.25*H
+d=0.5*t
+ric=0.1*l*m ! радиус вспомогательной окружности у вершины
+aic=8*ric ! сторона вспомогательного квадрата
+lic=b1-b+l
+F=1 !Н
+
+! Вход в препроцессор
+
+/PREP7   
+
+! Типы элементов  
+
+ET,1,MESH200,7 
+ET,2,SOLID95 
+     
+! Параметры материала 
+ 
+MPTEMP,1,0  
+MPDATA,EX,1,,E  
+MPDATA,PRXY,1,,mu  
+MPTEMP,1,0  
+
+! Основные точки
+
+csys,0
+k,1,0,0
+k,2,0,H/2
+k,3,b1,H/2
+k,4,b1,0
+k,5,lic,0
+k,6,lic-ric,0
+k,7,lic,ric
+k,8,lic+ric,0
+k,9,b1-b,a
+k,10,lic-aic/2,0
+k,11,lic-aic/2,aic/2
+k,12,lic,aic/2
+k,13,lic+aic/2,aic/2
+k,14,lic+aic/2,0
+k,15,b1-b,a,b1 !ось круга
+k,16,lic-aic/2,H/2
+k,17,lic+aic/2,H/2
+k,18,b1-b-d/2,a
+k,19,b1-b,a+d/2
+k,20,b1-b+d/2,a
+k,21,b1-b,a-d/2
+
+! Линии
+
+l,1,2
+l,2,16
+l,16,17
+l,17,3
+l,3,4
+l,1,10
+l,10,6
+l,6,5
+l,5,8
+l,8,14
+l,14,4
+LARC,18,19,9,d/2,
+LARC,19,20,9,d/2,
+LARC,20,21,9,d/2,
+LARC,21,18,9,d/2,
+al,all
+l,11,16
+l,13,17
+l,10,11
+l,11,12
+l,12,13
+l,13,14
+l,5,7
+l,7,12
+LARC,6,7,5,ric,
+LARC,7,8,5,ric,
+ASBL,ALL,ALL
+
+CSKP,101,1,5,4,12,1,1,     ! 101 - Новая локальная ЦИЛИНДРИЧЕСКАЯ СК
+CSKP,100,0,5,4,12,1,1,     ! 100 - Новая локальная ДЕКАРТОВАЯ СК
+CSKP,102,1,9,20,19,1,1,
+CSKP,103,0,9,20,19,1,1,
+
+csys,101
+LSEL,S,LOC,X,ric
+LESIZE,all, , ,4, , , , ,1
+lsel,all
+
+csys,100
+LSEL,S,LOC,X,-aic/2,aic/2
+LSEL,U,LOC,Y,aic/2+(H/2-aic/2)/8,H/2
+LSEL,U,LOC,Y,0,ric
+LSEL,U,LOC,X,0
+LESIZE,all, , ,2
+lsel,all
+
+csys,100
+LSEL,S,LOC,X,-aic/2,-ric
+LSEL,U,LOC,Y,ric/2,H/2
+LESIZE,all, , ,4,1/2.5
+lsel,all
+
+csys,101
+LSEL,S,LOC,X,ric+(aic/2-ric)/2
+csys,100
+LSEL,U,LOC,X,-aic/2,-ric
+LESIZE,all, , ,4,2.5
+lsel,all
+
+csys,100
+LSEL,U,LOC,X,-aic/2,aic/2
+LESIZE,all,aic/4
+lsel,all
+
+csys,100
+LSEL,S,LOC,X,-aic/2,aic/2
+LSEL,U,LOC,Y,0,aic/2
+LESIZE,all,aic/4
+lsel,all
+
+! Точка концентрации напряжений
+
+KSCON,5,ric/4,1,4,0.5,    !Отношение размера КЭ второго слоя 0.5
+
+! Разбиение площади центра на элементы
+
+CSYS,101
+ASEL,S,LOC,X,0,ric
+
+MSHAPE,0,2D 
+MSHKEY,0
+
+AMESH,ALL
+ASEL,ALL
+
+! Разбиение других площадей
+
+csys,100
+ASEL,S,LOC,X,-aic/2,-ric
+*GET,nomarea,AREA,0,NUM,MAX
+asel,all
+MSHKEY,1
+AMAP,nomarea,7,12,10,6
+
+ASEL,S,LOC,X,ric,aic/2
+*GET,nomarea,AREA,0,NUM,MAX
+asel,all
+MSHKEY,1
+AMAP,nomarea,8,14,12,7
+
+csys,100
+ASEL,S,LOC,X,-aic/2,aic/2
+ASEL,U,LOC,Y,0,aic/2
+MSHKEY,2
+amesh,all
+asel,all
+
+ASEL,U,LOC,X,-aic/2,aic/2
+MSHKEY,2
+amesh,all
+asel,all
+
+! Выбор другого типа элементов и выдавливание
+
+TYPE,   2   
+EXTOPT,ESIZE,NINT(t/(aic/8)),0, 
+EXTOPT,ACLEAR,0 
+!*  
+EXTOPT,ATTR,0,0,0   
+MAT,1   
+REAL,_Z4
+ESYS,0  
+  
+VEXT,all, , ,0,0,t,,,, 
+
+
+gu
