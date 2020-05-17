@@ -1,0 +1,10 @@
+
+*DIM,sukaa,,19
+
+*vread,sukaa(1,1),'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\C_0.4',txt,,IJK,19,1,,1
+(F20.0)
+*CFOPEN,'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\C_0.4_matl',txt,,
+*VWRITE,sukaa(1,1)
+%G
+*CFCLOS
+

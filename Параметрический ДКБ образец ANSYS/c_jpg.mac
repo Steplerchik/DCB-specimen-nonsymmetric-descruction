@@ -1,0 +1,85 @@
+*dim,ttabl,table,19,9
+
+*DIM,sukaa,,19
+
+*vread,sukaa(1),'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\C_0.4',txt,,IJK,19,1,,1
+(F20.0)
+
+*do,i,1,19
+a=sukaa(i)
+ttabl(i,1)=a
+*enddo
+
+*vread,sukaa(1),'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\C_0.6',txt,,IJK,19,1,,1
+(F20.0)
+
+*do,i,1,19
+a=sukaa(i)
+ttabl(i,2)=a
+*enddo
+
+*vread,sukaa(1),'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\C_0.8',txt,,IJK,19,1,,1
+(F20.0)
+
+*do,i,1,19
+a=sukaa(i)
+ttabl(i,3)=a
+*enddo
+
+*vread,sukaa(1),'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\C_1.0',txt,,IJK,19,1,,1
+(F20.0)
+
+*do,i,1,19
+a=sukaa(i)
+ttabl(i,4)=a
+*enddo
+
+*vread,sukaa(1),'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\C_1.2',txt,,IJK,19,1,,1
+(F20.0)
+
+*do,i,1,19
+a=sukaa(i)
+ttabl(i,5)=a
+*enddo
+
+*vread,sukaa(1),'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\C_1.4',txt,,IJK,19,1,,1
+(F20.0)
+
+*do,i,1,19
+a=sukaa(i)
+ttabl(i,6)=a
+*enddo
+
+*vread,sukaa(1),'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\C_1.6',txt,,IJK,19,1,,1
+(F20.0)
+
+*do,i,1,19
+a=sukaa(i)
+ttabl(i,7)=a
+*enddo
+
+*vread,sukaa(1),'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\C_1.8',txt,,IJK,19,1,,1
+(F20.0)
+
+*do,i,1,19
+a=sukaa(i)
+ttabl(i,8)=a
+*enddo
+
+*vread,sukaa(1),'C:\Users\Steplerchik\Desktop\НИРс\Параметрический ДКБ образец ANSYS\Data-out\C_2.0',txt,,IJK,19,1,,1
+(F20.0)
+
+*do,i,1,19
+a=sukaa(i)
+ttabl(i,9)=a
+*enddo
+
+
+*dim,otn,,19
+*do,i,1,19
+otn(i)=0.05*i
+*enddo
+
+! ТОЛЬКО 8 КРИВЫХ МОЖЕТ ПОСТРОИТЬ
+
+*VPLOT,otn,ttabl(1,1),2,3,4,5,6,7,8

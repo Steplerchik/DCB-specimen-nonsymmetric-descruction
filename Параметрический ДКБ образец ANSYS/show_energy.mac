@@ -1,0 +1,9 @@
+/post1
+
+csys,101
+nsel,s,loc,x,2*t,2*b
+ESLN,U,1
+nsel,all
+
+/EFACET,1   
+PLESOL, SENE,, 0,1.0
